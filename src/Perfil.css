@@ -1,0 +1,112 @@
+.contenedor-imagenes {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 5px 0;
+}
+
+.imagen-publicacion {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #b2dfdb;
+  transition: transform 0.2s ease;
+}
+
+.imagen-publicacion:hover {
+  transform: scale(1.05);
+}
+
+/* Fondo general */
+.perfil-container {
+  background: linear-gradient(135deg, #c8f3f1 0%, #e3fcef 100%);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Tarjeta principal */
+.perfil-card {
+  max-width: 600px;
+  border-radius: 20px;
+  background-color: #f8ffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Avatar */
+.perfil-avatar {
+  border: 3px solid #4fc3f7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Nombre y email */
+.perfil-nombre {
+  color: #0288d1;
+  font-weight: 600;
+}
+.perfil-email {
+  color: #607d8b;
+  margin-bottom: 1rem;
+}
+
+/* Botones */
+.btn-agregar-foto {
+  background-color: #4fc3f7;
+  border: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.btn-agregar-foto:hover {
+  background-color: #29b6f6;
+}
+
+.btn-quitar-foto {
+  border-color: #4fc3f7;
+  color: #4fc3f7;
+  transition: 0.3s;
+}
+.btn-quitar-foto:hover {
+  background-color: #e1f5fe;
+}
+
+.btn-cerrar-sesion {
+  border-radius: 10px;
+  border-color: #81c784 !important;
+  color: #388e3c !important;
+  background-color: #e8f5e9 !important;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.btn-cerrar-sesion:hover {
+  background-color: #c8e6c9 !important;
+}
+
+/* Publicaciones */
+.publicaciones-container {
+  max-width: 600px;
+}
+
+.titulo-publicaciones {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.publicacion-item {
+  background-color: #f4fbf9 !important;
+  border: 1px solid #b2dfdb !important;
+  border-radius: 10px !important;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-ver-mas {
+  background-color: #81d4fa;
+  border: none;
+  color: #fff;
+  transition: 0.3s;
+}
+.btn-ver-mas:hover {
+  background-color: #4fc3f7;
+}

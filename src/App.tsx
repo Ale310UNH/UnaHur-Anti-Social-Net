@@ -7,8 +7,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import PostDetail from './pages/PostDetail'
-import Profile from './pages/Profile'
-import CreatePost from './pages/CreatePost'
+import CrearPost from './pages/CrearPost'
+import Perfil from './pages/Perfil'
 
 const Protected: React.FC<{children: JSX.Element}> = ({ children }) => {
   const { user } = useAuth()
@@ -27,8 +27,8 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/post/:id" element={<PostDetail />} />
-            <Route path="/profile" element={<Protected><Profile /></Protected>} />
-            <Route path="/create" element={<Protected><CreatePost /></Protected>} />
+            <Route path="/perfil" element={<Protected><Perfil /></Protected>} />
+            <Route path="/crearPost" element={<Protected><CrearPost /></Protected>} />
           </Routes>
         </Container>
       </BrowserRouter>

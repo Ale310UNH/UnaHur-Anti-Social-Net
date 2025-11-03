@@ -20,12 +20,12 @@ const NavBar = () => {
         <Navbar.Collapse>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            {user && <Nav.Link as={Link} to="/create">Crear Post</Nav.Link>}
+            {user && <Nav.Link as={Link} to="/crearPost">Crear Post</Nav.Link>}
           </Nav>
           <Nav className="align-items-center">
             {user ? (
               <>
-                <Nav.Link as={Link} to="/profile">{user.nickName || 'Perfil'}</Nav.Link>
+                <Nav.Link as={Link} to="/perfil">{user.nickName || 'Perfil'}</Nav.Link>
                 <Button variant="outline-secondary" size="sm" className="ms-2" onClick={doLogout}>Salir</Button>
               </>
             ) : (

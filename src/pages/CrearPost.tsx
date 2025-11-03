@@ -9,7 +9,7 @@ interface Tag {
   name: string
 }
 
-const CreatePost = () => {
+const CrearPost = () => {
   const [description, setDescription] = useState('')
   const [imgUrls, setImgUrls] = useState<string[]>([''])
   const [tags, setTags] = useState<Tag[]>([])
@@ -116,4 +116,4 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
+export default CrearPost
