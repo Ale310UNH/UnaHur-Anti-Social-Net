@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { api } from '../api'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import './CrearPost.css'
 
 interface Tag {
   id: number
@@ -13,7 +14,7 @@ const CrearPost = () => {
   const [description, setDescription] = useState('')
   const [imgUrls, setImgUrls] = useState<string[]>([''])
   const [tags, setTags] = useState<Tag[]>([])
-  const [selectedTags, setSelectedTags] = useState<number[]>([])
+  const [seleccionTags, setSeleccionTags] = useState<number[]>([])
   const [error, setError] = useState('')
   const { user } = useAuth()
   const nav = useNavigate()
@@ -29,11 +30,11 @@ const CrearPost = () => {
   const handleImgChange = (i:number, v:string) => {
     const copy = [...imgUrls]; copy[i] = v; setImgUrls(copy)
   }
-  const addImgField = () => setImgUrls([...imgUrls, ''])
+  const agregarCampoImagen = () => setImgUrls([...imgUrls, ''])
 
   // Manejo de selección de tags
-  const toggleTag = (id:number) => {
-    setSelectedTags(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id])
+  const elegirTag = (id:number) => {
+    setSeleccionTags(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id])
   }
 
   // Submit
@@ -46,12 +47,12 @@ const CrearPost = () => {
 
     try {
       // Crear post con tagIds
-      const postResp = await api.post('/posts', { description, userId: user.id, tagIds: selectedTags })
+      const postResp = await api.post('/posts', { description, userId: user.id, tagIds: seleccionTags })
       const postId = postResp.data.id
 
       // Crear imágenes
-      const validImgs = imgUrls.map(s=>s.trim()).filter(Boolean)
-      for (const url of validImgs) {
+      const validarImgs = imgUrls.map(s=>s.trim()).filter(Boolean)
+      for (const url of validarImgs) {
         await api.post('/postimages', { url, postId })
       }
 
@@ -63,18 +64,20 @@ const CrearPost = () => {
   }
 
   return (
-    <Card className="mx-auto" style={{maxWidth:800}}>
+    <div className="crear-post-container">
+    <Card className="crear-post-card shadow">
       <Card.Body>
-        <h3>Crear nueva publicación</h3>
+        <h3 className="titulo-post mb-3">🌿 Crear nueva publicación</h3>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           {/* Descripción */}
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-3">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
               as="textarea"
               value={description}
               onChange={e=>setDescription(e.target.value)}
+              className="input-area"
             />
           </Form.Group>
 
@@ -86,22 +89,30 @@ const CrearPost = () => {
                 value={u}
                 onChange={e=>handleImgChange(i, e.target.value)}
                 placeholder="https://..."
+                className="input-imagen"
               />
             </Form.Group>
           ))}
-          <Button variant="link" onClick={addImgField}>Agregar otro campo de imagen</Button>
+          <Button
+              variant="outline-success"
+              size="sm"
+              onClick={agregarCampoImagen}
+              className="mb-3"
+            >
+              ➕ Agregar otra imagen
+            </Button>
 
           {/* Etiquetas */}
           <Form.Group className="mb-3">
             <Form.Label>Etiquetas</Form.Label>
-            <div>
+            <div className="etiquetas-container">
               {tags.map(t => (
                 <Button
                   key={t.id}
-                  variant={selectedTags.includes(t.id) ? 'primary' : 'outline-primary'}
+                  variant={seleccionTags.includes(t.id) ? 'primary' : 'outline-primary'}
                   size="sm"
-                  className="me-1 mb-1"
-                  onClick={()=>toggleTag(t.id)}
+                  className="me-1 mb-1 etiqueta-boton"
+                  onClick={()=>elegirTag(t.id)}
                 >
                   {t.name}
                 </Button>
@@ -109,10 +120,15 @@ const CrearPost = () => {
             </div>
           </Form.Group>
 
-          <Button type="submit">Crear</Button>
+           <div className="d-flex justify-content-center">
+              <Button type="submit" className="boton-crear">
+                🌸 Crear publicación
+              </Button>
+            </div>
         </Form>
       </Card.Body>
     </Card>
+    </div>
   )
 }
 

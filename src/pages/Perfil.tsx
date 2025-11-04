@@ -134,6 +134,7 @@ const Perfil = () => {
       </Card>
 
     <div className="publicaciones-container mx-auto">
+      
       <h5 className="titulo-publicaciones">Mis publicaciones</h5>
       <ListGroup>
         {posts.map(pub => (
