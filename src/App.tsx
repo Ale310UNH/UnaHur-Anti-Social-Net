@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import NavBar from './components/NavBar'
+import Protected from './components/Protected'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -10,13 +11,7 @@ import PostDetail from './pages/PostDetail'
 import CrearPost from './pages/CrearPost'
 import Perfil from './pages/Perfil'
 
-const Protected: React.FC<{children: JSX.Element}> = ({ children }) => {
-  const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
-  return children
-}
-
-const App: React.FC = () => {
+function App () {
   return (
     <AuthProvider>
       <BrowserRouter>
