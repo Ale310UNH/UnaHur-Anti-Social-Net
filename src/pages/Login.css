@@ -1,0 +1,66 @@
+.login-background {
+  background-image: url("https://campus2025.unahur.edu.ar/fondologin.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de desenfoque del fondo */
+.login-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(8px); /* difuminado */
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Contenedor semitransparente con efecto glass */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.15) !important; /* 👈 transparencia real */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* Ajustar el texto para que se lea bien */
+.login-card label,
+.login-card h3,
+.login-card p,
+.login-card small,
+.login-card strong {
+  color: #fff !important;
+}
+
+/* Centrado vertical */
+.d-flex.align-items-top {
+  align-items: center !important; /* 👈 mejor centrado vertical */
+  min-height: 100vh;
+}
+
+/* Botón con leve transparencia */
+.login-card button {
+  background-color: rgba(0, 255, 204, 0.25); /* 💧 verde agua con transparencia */
+  border: 1px solid rgba(0, 255, 204, 0.5);
+  color: #e6fff8;
+  width: 100%;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 10px rgba(0, 255, 204, 0.2);
+}
+
+.login-card button:hover {
+  background-color: rgba(0, 255, 204, 0.45); /* más sólido al hover */
+  border-color: rgba(0, 255, 204, 0.8);
+  color: #ffffff;
+  box-shadow: 0 6px 14px rgba(0, 255, 204, 0.35);
+}
