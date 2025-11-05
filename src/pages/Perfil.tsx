@@ -17,16 +17,17 @@ interface Post {
 const Perfil = () => {
   const { user, logout } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
-  const [fotoPerfil, setfotoPefil] = useState<string | null>(null)
+  const [fotoPerfil, setFotoPerfil] = useState<string | null>(null) 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // Cargar publicaciones e imagen de perfil
   useEffect(() => {
     if (!user) return
+
+    // Cargar publicaciones con imágenes
     api.get<Post[]>(`/posts?userId=${user.id}`)
       .then(async r => {
         const posts = r.data || []
-
-        // Para cada publicación, traer sus imágenes
         const publicacionesConImagenes = await Promise.all(
           posts.map(async p => {
             try {
@@ -38,14 +39,15 @@ const Perfil = () => {
             }
           })
         )
-
         setPosts(publicacionesConImagenes)
       })
       .catch(() => {})
 
-    // cargar imagen guardada
-    const fotoGuardada = localStorage.getItem(`profilePic-${user.id}`)
-    if (fotoGuardada) setfotoPefil(fotoGuardada)
+    // Cargar foto guardada del localStorage (solo si user.id existe)
+    if (user?.id) {
+      const fotoGuardada = localStorage.getItem(`fotoPerfil-${user.id}`)
+      if (fotoGuardada) setFotoPerfil(fotoGuardada)
+    }
   }, [user])
 
   if (!user) return <div>No autorizado</div>
@@ -56,22 +58,57 @@ const Perfil = () => {
       user.nickName || 'Usuario'
     )}&background=random&color=fff&size=128`
 
-  //Manejar la carga de una nueva foto 
+  // 🔹 Manejar nueva imagen
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      const base64 = reader.result as string
-      setfotoPefil(base64)
-      localStorage.setItem(`fotoPerfil-${user.id}`, base64)
-    }
-    reader.readAsDataURL(file)
-  }
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-  //Quitar la foto de perfil
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    const img = document.createElement('img'); 
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // Redimensionar manteniendo proporciones
+      const maxSize = 300;
+      let width = img.width;
+      let height = img.height;
+      if (width > height) {
+        if (width > maxSize) {
+          height *= maxSize / width;
+          width = maxSize;
+        }
+      } else {
+        if (height > maxSize) {
+          width *= maxSize / height;
+          height = maxSize;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convertir a base64 comprimido (JPEG con calidad 80 %)
+      const archivoFoto = canvas.toDataURL('image/jpeg', 0.8);
+
+      // Guardar en el estado y en localStorage
+      setFotoPerfil(archivoFoto);
+      localStorage.setItem(`fotoPerfil-${user.id}`, archivoFoto);
+    };
+
+    img.src = event.target?.result as string;
+  };
+
+  reader.readAsDataURL(file);
+};
+  // 🔹 Quitar foto
   const quitarFoto = () => {
-    setfotoPefil(null)
+    setFotoPerfil(null)
     localStorage.removeItem(`fotoPerfil-${user.id}`)
   }
 
@@ -106,7 +143,6 @@ const Perfil = () => {
 
             <div className="d-flex gap-2 mb-3">
               <Button
-              //  variant="outline-primary"
                 className="btn-agregar-foto"
                 size="sm"
                 onClick={elegirFoto}
@@ -133,16 +169,12 @@ const Perfil = () => {
         </Card.Body>
       </Card>
 
-    <div className="publicaciones-container mx-auto">
-      
-      <h5 className="titulo-publicaciones">Mis publicaciones</h5>
-      <ListGroup>
-        {posts.map(pub => (
-          <ListGroup.Item
-            key={pub.id}
-            className="publicacion-item d-flex flex-column"  >
-            <div>{pub.description}</div>
-            {/* Mostrar imágenes si hay */}
+      <div className="publicaciones-container mx-auto">
+        <h5 className="titulo-publicaciones">Mis publicaciones</h5>
+        <ListGroup>
+          {posts.map(pub => (
+            <ListGroup.Item key={pub.id} className="publicacion-item d-flex flex-column">
+              <div>{pub.description}</div>
               {pub.imagenes && pub.imagenes.length > 0 && (
                 <div className="contenedor-imagenes">
                   {pub.imagenes.map((url, i) => (
@@ -155,21 +187,20 @@ const Perfil = () => {
                   ))}
                 </div>
               )}
-
-            <div>
-              <small className="me-2 text-muted">
-                {pub.commentsCount ? `${pub.commentsCount} comentarios` : ''}
-              </small>
-              <Link to={`/post/${pub.id}`}>
-                <Button size="sm" className="btn-ver-mas">
-                  Ver más
-                </Button>
-              </Link>
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </div>
+              <div>
+                <small className="me-2 text-muted">
+                  {pub.commentsCount ? `${pub.commentsCount} comentarios` : ''}
+                </small>
+                <Link to={`/post/${pub.id}`}>
+                  <Button size="sm" className="btn-ver-mas">
+                    Ver más
+                  </Button>
+                </Link>
+              </div>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </div>
     </div>
   )
 }

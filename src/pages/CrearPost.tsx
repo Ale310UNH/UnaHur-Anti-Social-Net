@@ -10,6 +10,7 @@ interface Tag {
   name: string
 }
 
+//Creamos el post
 const CrearPost = () => {
   const [description, setDescription] = useState('')
   const [imgUrls, setImgUrls] = useState<string[]>([''])
@@ -56,7 +57,7 @@ const CrearPost = () => {
         await api.post('/postimages', { url, postId })
       }
 
-      nav('/profile')
+      nav('/perfil')
     } catch (err:any) {
       console.error(err)
       setError('Error al crear la publicación')
