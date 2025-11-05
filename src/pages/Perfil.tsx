@@ -93,7 +93,7 @@ const Perfil = () => {
       canvas.height = height;
       ctx.drawImage(img, 0, 0, width, height);
 
-      // Convertir a base64 comprimido (JPEG con calidad 80 %)
+      // Convertir archivoFoto comprimido (JPEG con calidad 80 %)
       const archivoFoto = canvas.toDataURL('image/jpeg', 0.8);
 
       // Guardar en el estado y en localStorage
