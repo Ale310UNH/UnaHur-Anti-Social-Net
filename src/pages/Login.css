@@ -1,3 +1,5 @@
+/*Fondo de imagen de unahur con blur*/
+
 .login-background {
   background-image: url("https://campus2025.unahur.edu.ar/fondologin.jpg");
   background-size: cover;
@@ -8,30 +10,29 @@
   overflow: hidden;
 }
 
-/* Efecto de desenfoque del fondo */
 .login-background::before {
   content: "";
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(8px); /* difuminado */
+  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Contenedor semitransparente con efecto glass */
+/*Formulario transparente y botón verde*/
+
 .login-card {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 400px;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.15) !important; /* 👈 transparencia real */
+  background-color: rgba(255, 255, 255, 0.15) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
-/* Ajustar el texto para que se lea bien */
 .login-card label,
 .login-card h3,
 .login-card p,
@@ -40,15 +41,13 @@
   color: #fff !important;
 }
 
-/* Centrado vertical */
 .d-flex.align-items-top {
-  align-items: center !important; /* 👈 mejor centrado vertical */
+  align-items: center !important; 
   min-height: 100vh;
 }
 
-/* Botón con leve transparencia */
 .login-card button {
-  background-color: rgba(0, 255, 204, 0.25); /* 💧 verde agua con transparencia */
+  background-color: rgba(0, 255, 204, 0.25);
   border: 1px solid rgba(0, 255, 204, 0.5);
   color: #e6fff8;
   width: 100%;
@@ -59,7 +58,7 @@
 }
 
 .login-card button:hover {
-  background-color: rgba(0, 255, 204, 0.45); /* más sólido al hover */
+  background-color: rgba(0, 255, 204, 0.45);
   border-color: rgba(0, 255, 204, 0.8);
   color: #ffffff;
   box-shadow: 0 6px 14px rgba(0, 255, 204, 0.35);
