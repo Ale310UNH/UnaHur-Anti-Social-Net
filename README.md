@@ -5,24 +5,18 @@ Proyecto frontend para la red social "UnaHur Anti-Social Net" desarrollado con R
 Cumple las funcionalidades requeridas: login simulado, registro, feed, detalle de post, crear post, perfil de usuario, comentarios.
 
 ## Requisitos
-- Node >= 18
-- npm o yarn
+- Node v- 18 para adelante
+- npm
 
 ## Instalación
-1. Copiar `.env.example` a `.env` y configurar `VITE_API_BASE` con la URL del backend (por ejemplo la API del enunciado).
+1. Clonar con  `.git clone` en una carpeta este repositorio y clonar la api utilizada: https://github.com/lucasfigarola/backend-api
 2. Instalar dependencias:
-```bash
-npm install
-# o
-yarn
-```
+`npm install`
 3. Correr en modo desarrollo:
-```bash
-npm run dev
+`npm run dev`
 ```
 
 ## Endpoints esperados
-Ver enunciado — el frontend usa `VITE_API_BASE` como base para los endpoints:
 - GET /users
 - POST /users
 - GET /posts
@@ -34,5 +28,4 @@ Ver enunciado — el frontend usa `VITE_API_BASE` como base para los endpoints:
 - POST /postimages
 - GET /postimages/post/:postId
 
-## Nota
-Este repo es un scaffold funcional. Ajusta estilos, validaciones y tests según tu criterio.
+
