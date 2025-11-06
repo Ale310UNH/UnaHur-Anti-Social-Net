@@ -1,0 +1,110 @@
+/* Contenedor general */
+body {
+  
+
+  background: linear-gradient(135deg, #c8f3f1 0%, #e3fcef 100%);
+  min-height: 100vh;
+  padding: 2rem;
+
+}
+
+/* ==== Card principal (bienvenida) ==== */
+.card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+}
+
+.card h2 {
+  color: #00796b;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: #555;
+}
+
+/* ==== Filtro ==== */
+form label {
+  color: #00796b;
+  font-weight: 500;
+}
+
+form select {
+  border-radius: 12px;
+  border: 1px solid #b2dfdb;
+  padding: 8px 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+form select:focus {
+  outline: none;
+  border-color: #4db6ac;
+  box-shadow: 0 0 0 0.25rem rgba(77, 182, 172, 0.25);
+}
+
+/* Publicaciones */
+.card.shadow-sm {
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 auto;
+}
+
+.card.shadow-sm:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.card-text {
+  color: #333;
+  font-size: 15px;
+}
+
+.badge {
+  background-color: #80cbc4 !important;
+  color: #004d40 !important;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+/* ==== Botón Ver más ==== */
+button.btn {
+  background-color: #009688;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+button.btn:hover {
+  background-color: #00796b;
+}
+
+/* ==== Imágenes ==== */
+.card img {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card img:hover {
+  transform: scale(1.03);
+}
+
+/* ==== Ajustes del contenedor de imágenes ==== */
+div[style*='overflow-x: auto'] {
+  padding: 8px 0;
+  gap: 6px;
+  scrollbar-width: thin;
+}
+
+div[style*='overflow-x: auto']::-webkit-scrollbar {
+  height: 6px;
+}
+
+div[style*='overflow-x: auto']::-webkit-scrollbar-thumb {
+  background: #b2dfdb;
+  border-radius: 10px;
+}

@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Card, Button, Row, Col, Badge, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
+import './Home.css'
 
 interface Tag {
   id: number
   name: string
+}
+
+interface Image {
+  id: number
+  url: string
+  postId: number
 }
 
 interface Post {
@@ -13,10 +20,11 @@ interface Post {
   description: string
   commentsCount?: number
   tagIds?: number[]
-  tags?: Tag[] // opcional si la API devuelve objetos completos
+  tags?: Tag[]
+  images?: Image[] 
 }
 
-const Home= () => {
+const Home = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [filter, setFilter] = useState('')
@@ -29,12 +37,24 @@ const Home= () => {
   const fetchPosts = async () => {
     try {
       const resp = await api.get('/posts')
-      // Asegurarse de que description sea string
-      const safePosts = resp.data.map((p: any) => ({
+      const postsData = resp.data.map((p: any) => ({
         ...p,
         description: typeof p.description === 'string' ? p.description : JSON.stringify(p.description),
       }))
-      setPosts(safePosts)
+
+      // 👇 Traemos las imágenes de cada post en paralelo
+      const postsWithImages = await Promise.all(
+        postsData.map(async (post: Post) => {
+          try {
+            const imgResp = await api.get(`/postimages/post/${post.id}`)
+            return { ...post, images: imgResp.data || [] }
+          } catch {
+            return { ...post, images: [] }
+          }
+        })
+      )
+
+      setPosts(postsWithImages)
     } catch (err) {
       console.error(err)
     }
@@ -49,13 +69,12 @@ const Home= () => {
     }
   }
 
-  // Filtrar posts según el nombre de la etiqueta
   const filtered = filter
     ? posts.filter(p => (p.tags || []).some(t => t.name === filter))
     : posts
 
   return (
-    <>
+    <div className='home-container'>
       <Card className="mb-3">
         <Card.Body>
           <h2>Bienvenidos a UnaHur</h2>
@@ -63,7 +82,7 @@ const Home= () => {
         </Card.Body>
       </Card>
 
-      <Form.Group className="mb-3" style={{maxWidth: 400}}>
+      <Form.Group className="mb-3" style={{ maxWidth: 400 }}>
         <Form.Label>Filtrar por etiqueta (bonus)</Form.Label>
         <Form.Select value={filter} onChange={e => setFilter(e.target.value)}>
           <option value="">-- Todas --</option>
@@ -73,16 +92,36 @@ const Home= () => {
         </Form.Select>
       </Form.Group>
 
-      <Row xs={1} md={2} lg={3} className="g-3">
+      
         {filtered.map(post => (
-          <Col key={post.id}>
-            <Card>
+            <Card key={post.id} className="mb-4 shadow-sm" style={{maxWidth: '600px'}}>
+              {/* Mostrar imágenes del post */}
+              {post.images && post.images.length > 0 && (
+                <div style={{ display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
+                  {post.images.map(img => (
+                    <Card.Img
+                      key={img.id}
+                      variant="top"
+                      src={img.url}
+                      alt="Imagen de la publicación"
+                      style={{
+                        maxHeight: '150px',
+                        width: '60%',
+                        objectFit: 'cover',
+                        marginRight: '4px',
+                        
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
               <Card.Body>
-                <Card.Text style={{minHeight: 60}}>
+                <Card.Text style={{ minHeight: 60 }}>
                   {post.description}
                 </Card.Text>
                 <div className="mb-2">
-                  {(post.tags || []).slice(0,3).map(t => (
+                  {(post.tags || []).slice(0, 3).map(t => (
                     <Badge className="me-1" bg="secondary" key={t.id}>
                       {t.name}
                     </Badge>
@@ -96,10 +135,10 @@ const Home= () => {
                 </div>
               </Card.Body>
             </Card>
-          </Col>
+        
         ))}
-      </Row>
-    </>
+      
+    </div>
   )
 }
 

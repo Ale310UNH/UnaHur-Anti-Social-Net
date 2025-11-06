@@ -106,7 +106,7 @@ const Perfil = () => {
 
   reader.readAsDataURL(file);
 };
-  // 🔹 Quitar foto
+  // Quitar foto
   const quitarFoto = () => {
     setFotoPerfil(null)
     localStorage.removeItem(`fotoPerfil-${user.id}`)
