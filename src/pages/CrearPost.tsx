@@ -99,6 +99,7 @@ const CrearPost = () => {
               size="sm"
               onClick={agregarCampoImagen}
               className="mb-3"
+              style={{color:"#ffffff"}}
             >
               Agregar otra imagen
             </Button>
@@ -110,7 +111,7 @@ const CrearPost = () => {
               {tags.map(t => (
                 <Button
                   key={t.id}
-                  variant={seleccionTags.includes(t.id) ? 'primary' : 'outline-primary'}
+                  variant={seleccionTags.includes(t.id) ? 'primary' : 'outline-secundary'}
                   size="sm"
                   className="me-1 mb-1 etiqueta-boton"
                   onClick={()=>elegirTag(t.id)}

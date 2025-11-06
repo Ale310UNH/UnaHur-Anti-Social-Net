@@ -46,7 +46,7 @@ const NavBar = () => {
                   }}>{user.nickName || 'Perfil'}</Nav.Link>
                 <Button variant="outline-secondary" size="sm" className="ms-2" style={{
                     borderColor: '#00796b',
-                    color: '#00796b',
+                    color: '#ffffff',
                     fontWeight: 500,
                     borderRadius: '20px',
                     transition: 'all 0.2s ease',
