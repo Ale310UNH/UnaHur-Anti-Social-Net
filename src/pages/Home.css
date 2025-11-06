@@ -20,6 +20,7 @@ body {
   border-radius: 20px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
   background-color: #ffffff;
+  
 }
 
 .card h2 {
@@ -53,10 +54,10 @@ form select:focus {
 
 /* Publicaciones */
 .card.shadow-sm {
-  border-radius: 18px;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin: 0 auto;
+ display: flex;
+ flex-direction: column;
+ max-width: 900px;
+ justify-content: space-between;
 }
 
 .card.shadow-sm:hover {
@@ -113,4 +114,15 @@ div[style*='overflow-x: auto']::-webkit-scrollbar {
 div[style*='overflow-x: auto']::-webkit-scrollbar-thumb {
   background: #b2dfdb;
   border-radius: 10px;
+}
+.card.shadow-sm img {
+  height: auto;
+  max-width: 60%;
+  object-fit: contain; /* mantiene proporciones sin recortar */
+}
+.card.shadow-sm .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

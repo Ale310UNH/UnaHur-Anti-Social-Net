@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Button, Row, Col, Badge, Form } from 'react-bootstrap'
+import { Card, Button, Form, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
 import './Home.css'
@@ -18,10 +18,12 @@ interface Image {
 interface Post {
   id: number
   description: string
-  commentsCount?: number
-  tagIds?: number[]
-  tags?: Tag[]
-  images?: Image[] 
+  User?: {
+    id: number
+    nickName: string
+  }
+  Tags?: Tag[]
+  images?: Image[]
 }
 
 const Home = () => {
@@ -37,24 +39,23 @@ const Home = () => {
   const fetchPosts = async () => {
     try {
       const resp = await api.get('/posts')
-      const postsData = resp.data.map((p: any) => ({
-        ...p,
-        description: typeof p.description === 'string' ? p.description : JSON.stringify(p.description),
-      }))
 
-      // Traemos las imágenes de cada post en paralelo
+      // Traer imágenes
       const postsWithImages = await Promise.all(
-        postsData.map(async (post: Post) => {
+        resp.data.map(async (post: Post) => {
           try {
             const imgResp = await api.get(`/postimages/post/${post.id}`)
-            return { ...post, images: imgResp.data || [] }
+            return {
+              ...post,
+              images: imgResp.data || []
+            }
           } catch {
             return { ...post, images: [] }
           }
         })
       )
 
-      setPosts(postsWithImages)
+      setPosts(postsWithImages.reverse())
     } catch (err) {
       console.error(err)
     }
@@ -70,11 +71,11 @@ const Home = () => {
   }
 
   const filtered = filter
-    ? posts.filter(p => (p.tags || []).some(t => t.name === filter))
+    ? posts.filter(p => (p.Tags || []).some(t => t.name === filter))
     : posts
 
   return (
-    <div className='home-container'>
+    <div className="home-container">
       <Card className="mb-3">
         <Card.Body>
           <h2>Bienvenidos a UnaHur</h2>
@@ -82,62 +83,62 @@ const Home = () => {
         </Card.Body>
       </Card>
 
-      <Form.Group className="mb-3" >
-        <Form.Label>Filtrar por etiqueta (bonus)</Form.Label>
+      <Form.Group className="mb-3">
+        <Form.Label>Filtrar por etiqueta</Form.Label>
         <Form.Select value={filter} onChange={e => setFilter(e.target.value)}>
           <option value="">-- Todas --</option>
           {tags.map(t => (
-            <option key={t.id} value={t.name}>{t.name}</option>
+            <option key={t.id} value={t.name}>
+              {t.name}
+            </option>
           ))}
         </Form.Select>
       </Form.Group>
 
-      
-        {filtered.map(post => (
-            <Card key={post.id} className="mb-4 shadow-sm">
-              {/* Mostrar imágenes del post */}
-              {post.images && post.images.length > 0 && (
-                <div style={{ display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
-                  {post.images.map(img => (
-                    <Card.Img
-                      key={img.id}
-                      variant="top"
-                      src={img.url}
-                      alt="Imagen de la publicación"
-                      style={{
-                        maxHeight: '400px',
-                        width: '100%',
-                        objectFit: 'cover',
-                        marginRight: '4px',
-                        
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
+      {filtered.map(post => (
+        <Card key={post.id} className="mb-4 shadow-sm">
+          {post.images && post.images.length > 0 && (
+            <div style={{ display: 'flex', overflowX: 'auto', justifyContent: 'center' }}>
+              {post.images.map(img => (
+                <Card.Img
+                  key={img.id}
+                  variant="top"
+                  src={img.url}
+                  alt="Imagen de la publicación"
+                  style={{
+                    maxHeight: '400px',
+                    width: '100%',
+                    objectFit: 'cover',
+                    marginRight: '4px'
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
-              <Card.Body>
-                <Card.Text style={{ minHeight: 200, minWidth:300 }}>
-                  {post.description}
-                </Card.Text>
-                <div className="mb-2">
-                  {(post.tags || []).slice(0, 3).map(t => (
-                    <Badge className="me-1" bg="secondary" key={t.id}>
-                      {t.name}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <small>{post.commentsCount ? `${post.commentsCount} comments` : ''}</small>
-                  <Link to={`/post/${post.id}`}>
-                    <Button size="sm">Ver más</Button>
-                  </Link>
-                </div>
-              </Card.Body>
-            </Card>
-        
-        ))}
-      
+          <Card.Body>
+            <Card.Title>
+              {post.User?.nickName || 'Usuario desconocido'}
+            </Card.Title>
+
+            <Card.Text>{post.description}</Card.Text>
+
+            <div className="mb-2">
+              {(post.Tags || []).slice(0, 3).map(t => (
+                <Badge className="me-1" bg="secondary" key={t.id}>
+                  {t.name}
+                </Badge>
+              ))}
+            </div>
+
+            <div className="d-flex justify-content-end align-items-center">
+              <Link to={`/post/${post.id}`}>
+                <Button size="sm">Ver más</Button>
+              </Link>
+            </div>
+          </Card.Body>
+        </Card>
+      ))}
     </div>
   )
 }
