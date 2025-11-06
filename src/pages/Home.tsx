@@ -97,7 +97,7 @@ const Home = () => {
             <Card key={post.id} className="mb-4 shadow-sm">
               {/* Mostrar imágenes del post */}
               {post.images && post.images.length > 0 && (
-                <div style={{ display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
+                <div style={{ padding: "10%", display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
                   {post.images.map(img => (
                     <Card.Img
                       key={img.id}
