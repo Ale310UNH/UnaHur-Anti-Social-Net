@@ -1,6 +1,5 @@
 /* Contenedor general */
 body {
-  
 
   background: linear-gradient(135deg, #c8f3f1 0%, #e3fcef 100%);
   min-height: 100vh;
@@ -8,7 +7,14 @@ body {
 
 }
 
-/* ==== Card principal (bienvenida) ==== */
+.home-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #d0f4f7, #c6f6d5);
+  min-height: 100vh;
+}
+/* Card principal (bienvenida) */
 .card {
   border: none;
   border-radius: 20px;

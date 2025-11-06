@@ -42,7 +42,7 @@ const Home = () => {
         description: typeof p.description === 'string' ? p.description : JSON.stringify(p.description),
       }))
 
-      // 👇 Traemos las imágenes de cada post en paralelo
+      // Traemos las imágenes de cada post en paralelo
       const postsWithImages = await Promise.all(
         postsData.map(async (post: Post) => {
           try {
