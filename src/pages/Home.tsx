@@ -95,6 +95,7 @@ const Home = () => {
         </Form.Select>
       </Form.Group>
 
+<<<<<<< HEAD
       {filtered.map(post => (
         <Card key={post.id} className="mb-4 shadow-sm">
           {post.images && post.images.length > 0 && (
@@ -115,6 +116,31 @@ const Home = () => {
               ))}
             </div>
           )}
+=======
+      
+        {filtered.map(post => (
+            <Card key={post.id} className="mb-4 shadow-sm">
+              {/* Mostrar imágenes del post */}
+              {post.images && post.images.length > 0 && (
+                <div style={{ padding: "10%", display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
+                  {post.images.map(img => (
+                    <Card.Img
+                      key={img.id}
+                      variant="top"
+                      src={img.url}
+                      alt="Imagen de la publicación"
+                      style={{
+                        maxHeight: '400px',
+                        width: '100%',
+                        objectFit: 'cover',
+                        marginRight: '4px',
+                        
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+>>>>>>> fb5662f0a92f184c0c2df353397af31845596411
 
           <Card.Body>
             <Card.Title>
