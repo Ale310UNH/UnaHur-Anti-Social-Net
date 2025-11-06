@@ -82,7 +82,7 @@ const Home = () => {
         </Card.Body>
       </Card>
 
-      <Form.Group className="mb-3" style={{ maxWidth: 400 }}>
+      <Form.Group className="mb-3" >
         <Form.Label>Filtrar por etiqueta (bonus)</Form.Label>
         <Form.Select value={filter} onChange={e => setFilter(e.target.value)}>
           <option value="">-- Todas --</option>
@@ -94,7 +94,7 @@ const Home = () => {
 
       
         {filtered.map(post => (
-            <Card key={post.id} className="mb-4 shadow-sm" style={{maxWidth: '600px'}}>
+            <Card key={post.id} className="mb-4 shadow-sm">
               {/* Mostrar imágenes del post */}
               {post.images && post.images.length > 0 && (
                 <div style={{ display: 'flex', overflowX: 'auto', justifyContent: 'center'}}>
@@ -105,8 +105,8 @@ const Home = () => {
                       src={img.url}
                       alt="Imagen de la publicación"
                       style={{
-                        maxHeight: '150px',
-                        width: '60%',
+                        maxHeight: '400px',
+                        width: '100%',
                         objectFit: 'cover',
                         marginRight: '4px',
                         
@@ -117,7 +117,7 @@ const Home = () => {
               )}
 
               <Card.Body>
-                <Card.Text style={{ minHeight: 60 }}>
+                <Card.Text style={{ minHeight: 200, minWidth:300 }}>
                   {post.description}
                 </Card.Text>
                 <div className="mb-2">

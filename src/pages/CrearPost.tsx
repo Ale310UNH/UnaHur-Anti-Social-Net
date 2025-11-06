@@ -100,7 +100,7 @@ const CrearPost = () => {
               onClick={agregarCampoImagen}
               className="mb-3"
             >
-              ➕ Agregar otra imagen
+              Agregar otra imagen
             </Button>
 
           {/* Etiquetas */}

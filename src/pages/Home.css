@@ -1,6 +1,5 @@
 /* Contenedor general */
 body {
-
   background: linear-gradient(135deg, #c8f3f1 0%, #e3fcef 100%);
   min-height: 100vh;
   padding: 2rem;
@@ -10,6 +9,7 @@ body {
 .home-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   padding: 2rem;
   background: linear-gradient(135deg, #d0f4f7, #c6f6d5);
   min-height: 100vh;
@@ -32,7 +32,7 @@ body {
   color: #555;
 }
 
-/* ==== Filtro ==== */
+/* Filtro */
 form label {
   color: #00796b;
   font-weight: 500;
@@ -77,7 +77,7 @@ form select:focus {
   padding: 6px 10px;
 }
 
-/* ==== Botón Ver más ==== */
+/* Botón Ver más */
 button.btn {
   background-color: #009688;
   border: none;
@@ -89,7 +89,7 @@ button.btn:hover {
   background-color: #00796b;
 }
 
-/* ==== Imágenes ==== */
+/* Imágenes */
 .card img {
   border-radius: 10px;
   transition: transform 0.3s ease;
@@ -99,7 +99,7 @@ button.btn:hover {
   transform: scale(1.03);
 }
 
-/* ==== Ajustes del contenedor de imágenes ==== */
+/* Ajustes del contenedor de imágenes */
 div[style*='overflow-x: auto'] {
   padding: 8px 0;
   gap: 6px;
